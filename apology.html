@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Apology Puzzle Game</title>
+  <style>
+    body {
+      font-family: "Comic Sans MS", cursive, sans-serif;
+      background: #fff6f9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    h1 {
+      color: #ff4e77;
+    }
+    #game {
+      display: grid;
+      grid-template-columns: repeat(4, 80px);
+      gap: 10px;
+      margin: 20px 0;
+    }
+    .tile {
+      width: 80px;
+      height: 80px;
+      background: #ffe0ec;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      cursor: pointer;
+      border-radius: 12px;
+      box-shadow: 2px 2px 6px #ccc;
+    }
+    .matched {
+      background: #d4edda;
+      pointer-events: none;
+    }
+    #message {
+      display: none;
+      margin-top: 20px;
+      font-size: 1.2rem;
+      background: #fff0f3;
+      padding: 20px;
+      border-radius: 10px;
+      color: #d6336c;
+      text-align: center;
+      width: 300px;
+      box-shadow: 0 0 10px #ffd6e0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Match the Tiles 💖</h1>
+  <div id="game"></div>
+  <div id="message" contenteditable="true">
+    I'm sorry for the fight. You matter more than my ego. Please forgive me. ❤️
+  </div>
+
+  <script>
+    const emojis = ['🐻', '❤️', '💌', '🌈', '🐱', '🍫', '🌸', '🧸'];
+    let tileValues = [...emojis, ...emojis];
+    tileValues = tileValues.sort(() => 0.5 - Math.random());
+
+    const game = document.getElementById('game');
+    const message = document.getElementById('message');
+    let first = null;
+    let second = null;
+    let lockBoard = false;
+    let matchedCount = 0;
+
+    tileValues.forEach((emoji, index) => {
+      const tile = document.createElement('div');
+      tile.classList.add('tile');
+      tile.dataset.index = index;
+      tile.dataset.emoji = emoji;
+      tile.textContent = '';
+      game.appendChild(tile);
+    });
+
+    game.addEventListener('click', (e) => {
+      const tile = e.target;
+      if (!tile.classList.contains('tile') || lockBoard || tile.textContent) return;
+
+      tile.textContent = tile.dataset.emoji;
+
+      if (!first) {
+        first = tile;
+        return;
+      }
+
+      second = tile;
+      lockBoard = true;
+
+      if (first.dataset.emoji === second.dataset.emoji) {
+        first.classList.add('matched');
+        second.classList.add('matched');
+        matchedCount += 2;
+        resetTurn();
+
+        if (matchedCount === tileValues.length) {
+          setTimeout(() => {
+            message.style.display = 'block';
+          }, 500);
+        }
+      } else {
+        setTimeout(() => {
+          first.textContent = '';
+          second.textContent = '';
+          resetTurn();
+        }, 800);
+      }
+    });
+
+    function resetTurn() {
+      [first, second] = [null, null];
+      lockBoard = false;
+    }
+  </script>
+</body>
+</html>

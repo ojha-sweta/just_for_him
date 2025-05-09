@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Virtual Hug Generator</title>
+  <style>
+    body {
+      font-family: "Comic Sans MS", cursive;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      height: 100vh;
+      background: linear-gradient(45deg,#f19adf,#ea6e72,#fff9fb);
+      background-size: 600% 600%;
+      animation: gradientMOve 12s ease infinite;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+     }
+
+     @keyframes gradientMOve {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+
+    h1 {
+      color: #d6336c;
+      margin-bottom: 10px;
+    }
+
+    button {
+      background: #fd79a8;
+      color: white;
+      padding: 15px 30px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: 0.3s;
+      z-index : 3;
+    }
+
+    button:hover {
+      background: #e84393;
+    }
+
+    #hugs {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 2;
+    }
+
+    .hug {
+      position: absolute;
+      font-size: 2rem;
+      animation: fall 3s linear forwards;
+    }
+
+    @keyframes fall {
+      0% { top: -30px; opacity: 0; transform: scale(1); }
+      10% { opacity: 1; }
+      100% { top: 100%; opacity: 0;transform: scale(1.2); }
+    }
+
+    #message {
+      margin-top: 30px;
+      font-size: 1.2rem;
+      color: #d6306a;
+      background: #ffeef2;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 0 12px #ffcde1;
+      width: 320px;
+      text-align: center;
+      display: none;
+      animation: fadeIn 1.2s ease forwards;
+      z-index: 4;
+      }
+      @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    #message[contenteditable]:focus {
+      outline: 2px dashed #f48fb1;
+      background: #fff7fb;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Virtual Hug Generator 🐻</h1>
+  <button onclick="sendHugs()">Need a Hug?</button>
+
+  <div id="hugs"></div>
+
+  <div id="message" contenteditable="true">
+    Sending you all my hugs 🐻💕  
+    I'm sorry for whatever chaos happens between us due to me. I wanna live peacefully with you love, I'm here, and I love you forever.  
+    Close your eyes and feel this, okay?
+  </div>
+
+  <audio id="hugSound" src="love.mp3" preload="auto"></audio>
+
+
+  <script>
+    const emojis = ["🤗", "🐻", "❤️", "💞", "💖"];
+    function sendHugs() {
+      const hugsContainer = document.getElementById("hugs");
+      const message = document.getElementById("message");
+      const audio = document.getElementById("hugSound");
+
+      for (let i = 0; i < 35; i++) {
+        const hug = document.createElement("div");
+        hug.classList.add("hug");
+        hug.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        hug.style.left = Math.random() * 100 + "vw";
+        hug.style.fontSize = 1 + Math.random() * 2 + "rem";
+        hug.style.animationDuration = 2.5 + Math.random() * 2 + "s";
+        hugsContainer.appendChild(hug);
+
+        setTimeout(() => hug.remove(), 5000);
+      }
+
+      message.style.display = "block";
+      audio.play();
+    }
+  </script>
+
+</body>
+</html>

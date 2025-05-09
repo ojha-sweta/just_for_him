@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Apology eCard</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Georgia', serif;
+      background: linear-gradient(135deg, #fff0f5, #ffe4e1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .container {
+      padding: 30px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 0 20px #f8c0d8;
+      max-width: 90%;
+      width: 350px;
+    }
+
+    #intro {
+      font-size: 1.4rem;
+      color: #c2185b;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    #message {
+      display: none;
+      font-size: 1.2rem;
+      color: #880e4f;
+      margin-top: 20px;
+      animation: typing 4s steps(40, end), fadein 1s ease-in-out;
+      white-space: pre-line;
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    @keyframes fadein {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    #message[contenteditable]:focus {
+      outline: 2px dashed #f8bbd0;
+      background: #fff0f7;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div id="intro">You have a message... 💌</div>
+    <div id="message" contenteditable="true">
+Hey baby...  
+I know I messed up, and I’m so sorry for hurting you.  
+Please don’t let my mistake take away all the love we have.  
+I love you, deeply, forever — and aise smile gyb nhii kiya kro..sorry never wanted to be a reason for your tears.  
+💖 Yours, always.
+    </div>
+  </div>
+
+  <audio id="bgMusic" src="love1.mp3" preload="auto"></audio>
+
+  <script>
+    setTimeout(() => {
+      document.getElementById('intro').style.display = 'none';
+      document.getElementById('message').style.display = 'block';
+      document.getElementById('bgMusic').play();
+    }, 5000);
+  </script>
+
+</body>
+</html>
